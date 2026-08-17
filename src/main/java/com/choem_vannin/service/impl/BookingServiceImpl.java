@@ -54,7 +54,7 @@ public class BookingServiceImpl implements BookingService {
         }
 
         // Calculate price
-        BigDecimal pricePerNight = room.getRoomType().getPricePerNight(); // find price per night of the room
+        BigDecimal pricePerNight = room.getPricePerNight();
         BigDecimal night = BigDecimal.valueOf(ChronoUnit.DAYS.between(requestDTO.getCheckIn(), requestDTO.getCheckOut()));// find night by date
         BigDecimal totalPrice = pricePerNight.multiply(night); // calculate totalPrice
 

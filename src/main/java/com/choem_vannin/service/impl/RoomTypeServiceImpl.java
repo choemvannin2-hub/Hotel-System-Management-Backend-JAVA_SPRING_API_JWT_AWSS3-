@@ -8,6 +8,7 @@ import com.choem_vannin.mapper.RoomTypeMapper;
 import com.choem_vannin.model.RoomType;
 import com.choem_vannin.repository.RoomTypeRepository;
 import com.choem_vannin.service.interfaces.RoomTypeService;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,14 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     }
 
     @Override
+    public RoomTypeResponseDTO getById(Long id) {
+        RoomType roomType = roomTypeRepository.findById(id).orElseThrow(()->
+                new ResourceNotFoundException("This Room Type not found.")
+                );
+        return RoomTypeMapper.toResponse(roomType);
+    }
+
+    @Override
     public RoomTypeResponseDTO update(Long id, RoomTypeRequestDTO requestDTO) {
 
         RoomType roomType = roomTypeRepository.findById(id).orElseThrow(()->
@@ -47,9 +56,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         );
 
         roomType.setName(requestDTO.getName());
-        roomType.setDescription(requestDTO.getDescription());
-        roomType.setCapacity(requestDTO.getCapacity());
-        roomType.setPricePerNight(requestDTO.getPricePerNight());
+        roomType.setAmenities(requestDTO.getAmenities());
 
         RoomType updated = roomTypeRepository.save(roomType);
         return RoomTypeMapper.toResponse(updated);

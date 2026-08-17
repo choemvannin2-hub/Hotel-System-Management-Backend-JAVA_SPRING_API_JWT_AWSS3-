@@ -37,7 +37,7 @@ public class RoomController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-    @PutMapping(path = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(path = "/{id}/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponseHelper<RoomResponseDTO>> update(
             @PathVariable Long id,
             @RequestPart("data")RoomRequestDTO requestDTO,

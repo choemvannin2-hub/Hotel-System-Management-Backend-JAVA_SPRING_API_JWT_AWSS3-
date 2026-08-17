@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponseDTO {
+public class ResgisterResponseDTO {
     private Long id;
     private String first_name;
     private String last_name;

@@ -26,14 +26,20 @@ public class RoomTypeController {
     }
 
 //    @PreAuthorize("isAuthenticated()") // we do not need this because we already config (every endpoint except auth must be authenticated
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<ApiResponseHelper<List<RoomTypeResponseDTO>>> getAll(){
         List<RoomTypeResponseDTO> responseDTOS = roomTypeService.getAll();
         return ApiResponse.ok(responseDTOS, "Get all room type success.");
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponseHelper<RoomTypeResponseDTO>> getById(@PathVariable Long id){
+        RoomTypeResponseDTO responseDTO = roomTypeService.getById(id);
+        return ApiResponse.ok(responseDTO, "Get Room Type success.");
+    }
+
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<ApiResponseHelper<RoomTypeResponseDTO>> update(
             @PathVariable Long id,
             @RequestBody RoomTypeRequestDTO requestDTO){
@@ -42,7 +48,8 @@ public class RoomTypeController {
         return ApiResponse.ok(responseDTO, "Updated room type success.");
     }
 
-    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<ApiResponseHelper<Void>> delete(@PathVariable Long id){
         roomTypeService.delete(id);
         return ApiResponse.ok(null, "Delete Room type id"+id+"success");

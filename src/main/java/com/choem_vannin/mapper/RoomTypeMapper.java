@@ -6,6 +6,8 @@ import com.choem_vannin.dto.responseDTO.RoomTypeResponseDTO;
 import com.choem_vannin.model.RoomType;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+
 @Component
 public class RoomTypeMapper {
 
@@ -14,9 +16,9 @@ public class RoomTypeMapper {
 
         return RoomType.builder()
                 .name(requestDTO.getName())
-                .description(requestDTO.getDescription())
-                .capacity(requestDTO.getCapacity())
-                .pricePerNight(requestDTO.getPricePerNight())
+                .amenities(requestDTO.getAmenities() != null ?  // prevent null
+                        new HashSet<>(requestDTO.getAmenities()) : new HashSet<>()
+                )
                 .build();
     }
 
@@ -26,9 +28,7 @@ public class RoomTypeMapper {
         return RoomTypeResponseDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
-                .description(entity.getDescription())
-                .capacity(entity.getCapacity())
-                .pricePerNight(entity.getPricePerNight())
+                .amenities(entity.getAmenities())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();

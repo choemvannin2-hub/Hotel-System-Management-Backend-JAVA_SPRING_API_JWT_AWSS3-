@@ -21,6 +21,9 @@ public class RoomMapper {
         return Room.builder()
                 .roomNumber(requestDTO.getRoomNumber())
                 .floor(requestDTO.getFloor())
+                .description(requestDTO.getDescription())
+                .capacity(requestDTO.getCapacity())
+                .pricePerNight(requestDTO.getPricePerNight())
                 .photoUrl(requestDTO.getPhotoUrl())
                 .roomType(roomType)
                 .build();
@@ -31,8 +34,12 @@ public class RoomMapper {
                 .id(entity.getId())
                 .roomNumber(entity.getRoomNumber())
                 .floor(entity.getFloor())
+                .description(entity.getDescription())
+                .capacity(entity.getCapacity())
+                .pricePerNight(entity.getPricePerNight())
                 .photoUrl(entity.getPhotoUrl())
-                .roomType(entity.getRoomType() != null ? RoomTypeMapper.toResponse(entity.getRoomType()) : null)
+                .roomType(entity.getRoomType().getId())
+                .roomTypeName(entity.getRoomType().getName())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();

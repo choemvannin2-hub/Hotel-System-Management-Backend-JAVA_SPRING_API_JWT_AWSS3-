@@ -9,6 +9,7 @@ public interface RoomTypeService {
     // TODO: 8/12/2026: CRUD Room type
     RoomTypeResponseDTO create(RoomTypeRequestDTO requestDTO);
     List<RoomTypeResponseDTO> getAll();
+    RoomTypeResponseDTO getById(Long id);
     RoomTypeResponseDTO update(Long id, RoomTypeRequestDTO requestDTO);
     void delete(Long id);
 }

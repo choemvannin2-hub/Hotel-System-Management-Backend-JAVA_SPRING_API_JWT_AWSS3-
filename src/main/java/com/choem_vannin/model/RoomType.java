@@ -1,16 +1,15 @@
 package com.choem_vannin.model;
 
+import com.choem_vannin.enums.Amenity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -26,10 +25,17 @@ public class RoomType {
 
     @Column(name = "room_type", nullable = false, unique = true)
     private String name;
-    private String description;
-    private Integer capacity; // Number of guest
-    @Column(name = "price_per_night", precision = 10, scale = 2, nullable = false)
-    private BigDecimal pricePerNight = BigDecimal.ZERO;
+
+    // ONE RoomType -> MANY Amenities
+    @ElementCollection(targetClass = Amenity.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(
+            name = "room_type_amenities",
+            joinColumns = @JoinColumn(name = "room_type_id")
+    )
+    @Column(name = "amenity", nullable = false)
+    @Builder.Default
+    private Set<Amenity> amenities = new HashSet<>();
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -39,8 +45,7 @@ public class RoomType {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    // ONE RoomType -> MANY Room
-    @OneToMany(mappedBy = "roomType", cascade = CascadeType.ALL)
+    // ONE RoomType -> MANY Rooms
+    @OneToMany(mappedBy = "roomType")
     private List<Room> rooms;
 }
-

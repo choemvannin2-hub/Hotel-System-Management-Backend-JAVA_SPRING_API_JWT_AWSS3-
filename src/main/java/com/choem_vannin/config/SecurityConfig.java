@@ -35,6 +35,9 @@ public class SecurityConfig {
                 // Disable CSRF for stateless REST APIs
                 .csrf(AbstractHttpConfigurer::disable)
 
+                // Offer Cross Origins
+                .cors(cors -> {})
+
                 // Disable default browser login forms and HTTP basic dialogs
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -53,6 +56,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Public Endpoints
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/rooms/**").permitAll()
+                        .requestMatchers("/api/roomType/**").permitAll()
 
                         // All other endpoints require authentication
                         // Specific role checks (@PreAuthorize) live inside Controllers
